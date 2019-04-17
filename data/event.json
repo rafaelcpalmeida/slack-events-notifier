@@ -1,0 +1,7 @@
+{
+  "name": "Example event",
+  "channels": "#channel",
+  "ics_file_url": "https://link.to.your/calendar-file.ics",
+  "message": "The message you want to share :v:",
+  "days_before_alert": 0
+}

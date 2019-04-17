@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/events_notifier'
+
+slack_client = SlackClient.new(ENV['SLACK_API_TOKEN'])
+
+Dir['data/*.json'].each do |file|
+	events_file = JSON.parse(File.read(file))
+	
+	calendar_file = CalendarParser::ics_file(calendar_url: events_file['ics_file_url'])
+
+	events_slack_notifier = EventSlackNotifier.new(slack_client: slack_client,
+																								 calendar_file: calendar_file,
+																								 channels: events_file['channels'],
+																								 message: events_file['message'],
+																								 days_before_alert: events_file['days_before_alert'])
+
+	events_slack_notifier.analise_events
+end
